@@ -5,7 +5,6 @@
     - data-mining
     - DMSection
     
-Did u see my art :man_student:
 
 
 
