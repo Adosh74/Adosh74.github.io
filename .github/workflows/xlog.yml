@@ -43,6 +43,7 @@ jobs:
           xlog \
           --build . \
           --sitename "Mohamed Hamdy"
+          --index=Home \
           rm *.md
           chmod -R 0777 .
 
