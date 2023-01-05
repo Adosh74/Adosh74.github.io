@@ -1,2 +1,0 @@
-ay haga
-Index
