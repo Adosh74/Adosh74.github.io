@@ -1,10 +1,10 @@
-I'm a software engineer student backend focused. I mainly use #nodeJS.
+I'm a software engineering student, backend-focused. I mainly use #nodeJS.
 
 
 # Social profiles
 
 
-* [GitHub](https://www.github.com/Adosh74) have some projects I do with courses or university.
+* [GitHub](https://www.github.com/Adosh74) have some projects I did with courses or university.
 * [Facebook](https://www.facebook.com/shebl74) some times share funny posts.
 * [Linkedin](https://www.linkedin.com/in/shebl74) share my certificates and achievements.
 * [Instagram](https://www.instagram.com/shebl0x01) for my family and friends only.
