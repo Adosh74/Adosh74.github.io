@@ -9,8 +9,10 @@ I'm a software engineering student, backend-focused. I mainly use #nodeJS.
 
 # Node.js
  1. Node.Js-1 (create professional environment )
- 
+ 2. mongodb (connection with mongo database)
 
+# javascript
+ 1. javascript-1 
 
 
 
