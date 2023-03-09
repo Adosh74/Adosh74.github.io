@@ -12,7 +12,12 @@ I'm a software engineering student, backend-focused. I mainly use #nodeJS.
  2. mongodb (connection with mongo database)
 
 # javascript
- 1. javascript-1 
+ 1. javascript-1
+
+# Security
+ 1. Linux-1 (Linux Cheat Sheet)
+ 2. OSINT
+    
 
 
 
