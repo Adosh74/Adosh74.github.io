@@ -8,7 +8,7 @@ npm i mongodb
 ```
 
 ## second create db.ts file and write the following code
-```
+```javascript
 import { MongoClient } from 'mongodb';
 import { MONGODB_URI, DATABASE_NAME } from './config';
 
