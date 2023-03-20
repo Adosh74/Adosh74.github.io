@@ -1,4 +1,4 @@
-I'm a software engineering student, backend-focused. I mainly use #nodeJS.
+I'm a software engineering student.
 
 
 # Social profiles
@@ -21,4 +21,3 @@ I'm a software engineering student, backend-focused. I mainly use #nodeJS.
 
 
 
-![](/public/e4169fb386fff58ef895801b96a3d62907549ad31b886227591bae5e42fe60bb.jpg)
