@@ -7,9 +7,11 @@ I'm a software engineering student.
 * [Linkedin](https://www.linkedin.com/in/shebl74) 
 * [Instagram](https://www.instagram.com/shebl0x01) 
 
+# projects
+  1. Eary-System
 # Node.js
  1. Node.Js-1 (create professional environment )
- 2. mongodb (connection with mongo database)
+ 2. mongoDB (connection with Mongo database)
 
 # javascript
  1. javascript-1
