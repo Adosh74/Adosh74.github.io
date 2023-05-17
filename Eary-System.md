@@ -21,7 +21,7 @@
         CREATE DATABASE EARY_SYSTEM; 
       ```
   5. download [**Thunder Client**](https://www.thunderclient.com/) extinction on VS Code.
-  6. import **thunder-collection_EARY-SYSTEM.json** from Thunder Client folder.
+  6. import **[thunder-collection_EARY-SYSTEM.json](https://github.com/Adosh74/Eary-System/blob/main/Thunder%20Client/thunder-collection_EARY-SYSTEM.json)** from Thunder Client folder.
   7. test all endpoints in collections.
   8.  download front-end dependencies.
       ``` bash
