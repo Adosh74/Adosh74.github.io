@@ -1,7 +1,7 @@
-I'm a software engineering student.
+I'm a software engineering student. :skull_and_crossbones:
 
 
-# Social profiles
+# Social profiles 
 * [GitHub](https://www.github.com/Adosh74)
 * [Facebook](https://www.facebook.com/shebl74)
 * [Linkedin](https://www.linkedin.com/in/shebl74) 
@@ -19,6 +19,9 @@ I'm a software engineering student.
 # Security
  1. Linux-1 (Linux Cheat Sheet)
  2. OSINT
+
+# Random
+
     
 
 
