@@ -42,8 +42,8 @@ jobs:
         run: |
           xlog \
           --build . \
-          --sitename "Mohamed Shebl"
-          --index=Home \
+          --sitename "Mohamed Shebl" \
+          --index=Home 
           rm *.md
           chmod -R 0777 .
 
