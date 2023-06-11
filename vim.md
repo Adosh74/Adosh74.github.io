@@ -10,3 +10,6 @@ Vim in VS Code
 | `i` | Switch from normal to insert mode. | 
 | `k` | Move to the above line. | 
 | `j` | Move to the next line. | 
+| `y` | Copy selection. |
+| `p` | Past selection. |
+| `d` | Cut selection. |
