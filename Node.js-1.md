@@ -36,6 +36,7 @@ npm i @trivago/prettier-plugin-sort-imports @types/express "@typescript-eslint/e
 ```
 
 ## Create JSON  file for a prettier configuration to formatter called .prettierrc.json
+- This is my configuration you can make your form [prettier-site](https://prettier.io/playground/)
 **.prettierrc.js**
 ``` json
 {
@@ -54,6 +55,36 @@ npm i @trivago/prettier-plugin-sort-imports @types/express "@typescript-eslint/e
 	"importOrderSortSpecifiers": true,
 	"printWidth": 70
 }
+```
+
+## Create file for eslint configuration to find and fix problems called .eslintrc.js
+**.eslintrc.js**
+``` javascript
+module.exports = {
+	env: {
+		browser: true,
+		es2021: true,
+		node: true,
+	},
+	extends: [
+		'eslint:recommended',
+		'plugin:@typescript-eslint/recommended',
+		'prettier',
+	],
+	overrides: [],
+	parser: '@typescript-eslint/parser',
+	parserOptions: {
+		ecmaVersion: 'latest',
+		sourceType: 'module',
+	},
+	plugins: ['@typescript-eslint', 'prettier'],
+	rules: {
+		'prettier/prettier': ['error', { endOfLine: 'auto' }],
+		'no-console': 0,
+		'no-var': 2,
+		'prefer-const': 'off',
+	},
+};
 ```
 
 
