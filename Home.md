@@ -23,8 +23,9 @@ I'm a software engineering student. :skull_and_crossbones:
  1. Linux-1 (Linux Cheat Sheet)
  2. OSINT
 
-# Random
-
+# About this site
+* Built using Xlog  from a [Github repository](https://github.com/emad-elsaid/emad-elsaid.github.io).
+* [Xlog features](https://xlog.emadelsaid.com/)
     
 
 
