@@ -8,7 +8,7 @@ I'm a software engineering student. :skull_and_crossbones:
 # Projects
   1. Eary-System
 # Node.js
- 1. Node.Js-1 (create professional environment )
+ 1. Node.Js-1 (create environment )
  2. mongoDB (connection with Mongo database)
  3. mongoFeatures
 
