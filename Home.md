@@ -24,8 +24,8 @@ I'm a software engineering student. :skull_and_crossbones:
  2. OSINT
 
 # About this site
-* Built using Xlog  from a [Github repository](https://github.com/emad-elsaid/emad-elsaid.github.io).
-* [Xlog features](https://xlog.emadelsaid.com/)
+* Built using Xlog [Xlog repository](https://github.com/emad-elsaid/emad-elsaid.github.io).
+
     
 
 
