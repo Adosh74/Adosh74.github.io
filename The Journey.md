@@ -12,7 +12,7 @@ The Journey is a tour booking website that allows users to book tours and manage
 
 ## Documentation
 
-[**ERD** and **APIs**](/ERD%20The%20Journey.md)
+[**ERD** and **APIs**](/ERD%20The%20Journey)
 
 ## Features
 
