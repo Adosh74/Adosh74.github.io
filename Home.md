@@ -2,7 +2,7 @@ I'm a software engineer | Backend. :ghost:
 
 
 # Social profiles 
-* [GitHub](https://www.github.com/Adosh74) [Linkedin](https://www.linkedin.com/in/shebl74) [Facebook](https://www.facebook.com/shebl74)  [Instagram](https://www.instagram.com/shebl0x01) 
+* [**GitHub**](https://www.github.com/Adosh74) [**Linkedin**](https://www.linkedin.com/in/shebl74) [**Facebook**](https://www.facebook.com/shebl74)  [**Instagram**](https://www.instagram.com/shebl0x01) [**Twitter** aka **X**](https://twitter.com/mohamedhamdii74)
 
 
 # Projects
