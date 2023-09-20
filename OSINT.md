@@ -4,7 +4,7 @@
 3. https://www.emailhippo.com/
 
 # Password Tools
-1. https://dehashed.com/ (Not Free)
+1. https://dehashed.com/ 
 
 # Google Dork
 1. https://www.exploit-db.com/google-hacking-database

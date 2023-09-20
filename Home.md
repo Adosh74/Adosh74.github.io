@@ -17,10 +17,6 @@ I'm a software engineer | Backend. :ghost:
 # Tools
   * vim
 
-
-# Javascript
- 1. javascript-1
-
 # Security
  1. Linux-1 (Linux Cheat Sheet)
  2. OSINT
