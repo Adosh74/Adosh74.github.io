@@ -16,6 +16,7 @@ I'm a software engineer | Backend. :ghost:
 
 # Tools
   * vim
+  * bash
 
 # Security
  1. Linux-1 (Linux Cheat Sheet)
