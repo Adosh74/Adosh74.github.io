@@ -47,10 +47,12 @@ jobs:
           --sitemap.domain=www.mohamedshebl.com \
           --activitypub.domain=www.mohamedshebl.com \
           --activitypub.username=Mohamed \
-          --activitypub.summary="A Software Engineer. Node.js" \
+          --activitypub.summary="I'm Mohamed Shebl a software engineer specializing in backend development using Node.js and Express. With expertise in these technologies, I have a strong foundation in building robust and scalable backend solutions. With proficiency in C/C++, Java, JavaScript, Typescript, SQL/NoSQL, and RESTful APIs, I can effectively design and implement backend systems. Additionally, my experience with Git/GitHub, OOP, UML, Docker, and React allows me to collaborate efficiently and deliver high-quality results" \
           --og.domain=www.mohamedshebl.com \
           --twitter.username=@mohamedhamdii74 \
-          --github.repo=https://github.com/Adosh74/Adosh74.github.io.io 
+          --github.repo=https://github.com/Adosh74/Adosh74.github.io.io \
+          --rss.domain=www.mohamedshebl.me \
+          --rss.description="I'm Mohamed Shebl a software engineer specializing in backend development using Node.js and Express. With expertise in these technologies, I have a strong foundation in building robust and scalable backend solutions. With proficiency in C/C++, Java, JavaScript, Typescript, SQL/NoSQL, and RESTful APIs, I can effectively design and implement backend systems. Additionally, my experience with Git/GitHub, OOP, UML, Docker, and React allows me to collaborate efficiently and deliver high-quality results"
           rm *.md
           chmod -R 0777 .
 
