@@ -1,5 +1,7 @@
 # The Journey
 
+-   [Live Demo](https://the-journey-q5g0.onrender.com/)
+-   [Code](https://github.com/Adosh74/The-Journey)
 -   [The Journey](#the-journey)
 -   [Description](#description)
 -   [Documentation](#documentation)
