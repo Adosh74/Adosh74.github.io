@@ -1,21 +1,39 @@
-On this page, we begin to initiate environment node.js (Typescript)
+On this page, we begin to initiate node.js (Typescript) with eslint, prettier, and ts-node-dev.
 
 /alert Note: ensure you installed **Node** on your machine
 
-To download typescript global  
-``` bash
- npm i typescript -g
+- To download **typescript global** ` npm i typescript -g `
+- To download **yarn** global ` npm i yarn -g `
+
+# 🏃 Quick Start with My Node Config
+```bash
+# clone my repo
+git clone https://github.com/Adosh74/Node-Env
+
+# change directory to Node-Env
+cd Node-Env
+
+# install dependencies
+yarn
+
+# remove .git folder
+rm -rf .git
+
+## Now you can start project ✌
 ```
-# initialization
-## My node setup 
-  *  [node-env](https://github.com/Adosh74/Node-Env)
-## initiate node porject
+
+# Initialization
+## Initiate node porject
 ``` bash
-  npm init 
+  npm init -y
 ```
 ## Add dependencies for format and analyzes your code 
 ``` bash
-npm i @trivago/prettier-plugin-sort-imports @types/express "@typescript-eslint/eslint-plugin @typescript-eslint/parse eslint eslint-config-prettie eslint-plugin-prettier nodemon prettier ts-node typescript -D
+# add dependencies.
+yarn add express typescript 
+
+# add dev dependencies.
+yarn add @trivago/prettier-plugin-sort-imports prettier eslint @types/express @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint-config-prettier eslint-plugin-prettier ts-node ts-node-dev  -D
 ```
 ## Create JSON file for typescript configuration called **tsconfig.json**
 **tsconfig.json**
