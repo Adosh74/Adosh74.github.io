@@ -17,6 +17,8 @@ cp -r .bashrc ~
 cp -r .bash_profile ~
 cp -r ble.sh ~
 cp -r .vim ~
+cp -r .vimrc ~
+cp -r .ps1.sh ~
 ```
 
 ## ble
