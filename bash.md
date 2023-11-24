@@ -24,3 +24,6 @@ cp -r .ps1.sh ~
 ## ble
 
 https://raw.githubusercontent.com/wiki/akinomyoga/ble.sh/images/trial1.gif
+
+
+#tools

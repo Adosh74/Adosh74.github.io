@@ -13,3 +13,5 @@ Vim in VS Code
 | `y` | Copy selection. |
 | `p` | Past selection. |
 | `d` | Cut selection. |
+
+#tools
