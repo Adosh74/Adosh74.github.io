@@ -71,8 +71,6 @@ https://github.com/Adosh74/Documentation-System
 
 ### Entity Relationship Diagram
 
--   [ERD](/ERD.dio)
-
 ### Table of Contents
 
 **Project:**
