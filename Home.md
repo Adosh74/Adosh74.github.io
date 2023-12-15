@@ -27,7 +27,7 @@ This is my blog I write about my projects, some of my skills and the tools I use
 
 # Security
  1. Linux-1 (Linux Cheat Sheet)
- 2. OSINT
+ 
 
 # About this site
 * Built using Xlog [Xlog repository](https://github.com/emad-elsaid/xlog).
