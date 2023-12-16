@@ -3,7 +3,6 @@ I'm **Mohamed Shebl** a software engineer specializing in backend development us
 
 This is my blog I write about my projects, some of my skills and the tools I use.
 
-
 # Social profiles 
 * [**GitHub**](https://www.github.com/Adosh74) [**Linkedin**](https://www.linkedin.com/in/shebl74) [**Facebook**](https://www.facebook.com/shebl74)  [**Instagram**](https://www.instagram.com/shebl0x01) [**Twitter** aka **X**](https://twitter.com/mohamedhamdii74)
 
