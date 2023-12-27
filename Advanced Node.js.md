@@ -76,6 +76,54 @@ when we call `crypto.pbkdf2` function, it will take the function and pass it off
 
 when the function is done executing, it will then pass the result back to the `Node` event loop, and then `Node` will call the callback function that we passed to `crypto.pbkdf2` function.
 
+### Changing the thread pool size
+we can change the size of the thread pool by using `process.env.UV_THREADPOOL_SIZE` environment variable.
+
+```js
+process.env.UV_THREADPOOL_SIZE = 2
+```
+if use windows, we can use `set` command to set the environment variable when we run the code.
+
+```bash 
+set UV_THREADPOOL_SIZE=2 && node <filename>.js
+```
+
+now we will see that the first two functions will take the same amount of time to execute, and the third function will wait for one of the threads to be available to execute it.
+
+
+### Libuv OS Delegation
+`Node` uses `libuv` to handle the thread pool, and `libuv` uses `OS` delegation to handle the thread pool.
+
+`OS` delegation means that `libuv` will delegate the task of creating threads to the `OS`.
+
+### Example
+```js
+const https = require('https');
+
+const start = Date.now();
+
+const doRequest = () => {
+    https.request('https://www.google.com', res => {
+        res.on('data', () => {})
+    
+        res.on('end', () => {
+            console.log('time', Date.now() - start);
+        })
+    }).end()
+}
+
+doRequest()
+doRequest()
+doRequest()
+doRequest()
+doRequest()
+doRequest()
+```
+when we run this code, we will see all the requests will take the same amount of time to execute.
+
+#### Conclusion
+`Libuv` Delegates the task of creating threads to the `OS`, and the `OS` will create threads to handle the requests. 
+
 #nodejs #tools
 
 
