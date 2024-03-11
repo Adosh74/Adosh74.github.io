@@ -1,3 +1,13 @@
+# Caching with Redis
+
+- [Why need caching?](#why-need-caching)
+- [What is Redis?](#what-is-redis)
+  - [Start Redis Server](#start-redis-server)
+  - [Basic Node.js Application](#basic-nodejs-application)
+  - [Install Redis Dependency and Connect to Redis](#install-redis-dependency-and-connect-to-redis)
+  - [Caching Functionality](#caching-functionality)
+  - [Clean Cache Middleware](#clean-cache-middleware)
+
 # Why need caching?
 
 - Caching is a technique to store a copy of the data in a faster storage system (i.e. cache) to speed up the data retrieval process.
@@ -16,13 +26,13 @@
 
 - Get the connection string from the dashboard.
 
-## Basic Node.js application
+## Basic Node.js Application
 
 - Create a new node.js application with express.
 
 - Or you can use my node starter template [Node-ENV](https://github.com/Adosh74/Node-Env)
 
-## Install Redis dependency and connect to Redis
+## Install Redis Dependency and Connect to Redis
 
 - Install the `redis` package using yarn.
 
