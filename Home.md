@@ -25,6 +25,7 @@ This is my blog I write about my projects, some of my skills and the tools I use
  3. mongoDB (connection with Mongo database)
  4. mongoFeatures
  5. Pm2
+ 6. caching with redis
 
 # Security
  1. Linux-1 (Linux Cheat Sheet)
