@@ -10,9 +10,9 @@
 
 # Why need caching?
 
-- Caching is a technique to store a copy of the data in a faster storage system (i.e. cache) to speed up the data retrieval process.
+- Caching is a technique to store a copy of the data in a faster storage system (i.e. cache) to speed up the data retrieval.
 
-- Caching is used to store the data that is frequently accessed by the users. It helps to reduce the load on the main storage system and improves the performance of the application.
+- Caching is used to store the data that the users frequently access. It helps reduce the load on the main storage system and improves the application's performance.
 
 # What is Redis?
 
@@ -72,7 +72,7 @@ client.on('error', (err) => {
 });
 ```
 
-If you don't familiar with logging, you can use `console.log` instead.
+If you aren't familiar with logging, you can use `console.log` instead.
 
 ## Caching Functionality
 
@@ -165,6 +165,6 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 
 - The `cleanCache` middleware is used to clear the cache data after the request is completed.
 
-- `await next()` is used to execute the next middleware then we are using the `clearHash` method to clear the cache data for the specific `hashKey`.
+- `await next()` is used to execute the next middleware then we use the `clearHash` method to clear the cache data for the specific `hashKey`.
 
 - We are using the `clearHash` method to clear the cache data for the specific `hashKey`.
