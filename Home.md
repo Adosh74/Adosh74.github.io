@@ -17,6 +17,7 @@ This is my blog I write about my projects, some of my skills and the tools I use
 
 # Tools
 
+* ansible
 * bash
 * vim
 * API Performance Testing
