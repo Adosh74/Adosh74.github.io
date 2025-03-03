@@ -38,7 +38,7 @@ jobs:
 
       - name: Build
         run: |
-          xlog \
+          ../xlog \
           --build . \
           --sitename "Mohamed Shebl" \
           --index=Home \
