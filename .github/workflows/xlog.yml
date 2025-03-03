@@ -28,7 +28,7 @@ jobs:
       - name: Allow non-ASCII character
         run: git config core.quotepath false
 
-      - name: restore timestamps
+      - name: Restore timestamps
         uses: chetan/git-restore-mtime-action@v1
 
       - name: Install xlog
@@ -45,20 +45,24 @@ jobs:
           --sitemap.domain=www.mohamedshebl.com \
           --activitypub.domain=www.mohamedshebl.com \
           --activitypub.username=Mohamed \
-          --activitypub.summary="I'm Mohamed Shebl a software engineer specializing in backend development using Node.js and Express. With expertise in these technologies, I have a strong foundation in building robust and scalable backend solutions. With proficiency in C/C++, Java, JavaScript, Typescript, SQL/NoSQL, and RESTful APIs, I can effectively design and implement backend systems. Additionally, my experience with Git/GitHub, OOP, UML, Docker, and React allows me to collaborate efficiently and deliver high-quality results" \
+          --activitypub.summary="I'm Mohamed Shebl, a software engineer specializing in backend development using Node.js and Express. With expertise in these technologies, I have a strong foundation in building robust and scalable backend solutions. With proficiency in C/C++, Java, JavaScript, Typescript, SQL/NoSQL, and RESTful APIs, I can effectively design and implement backend systems. Additionally, my experience with Git/GitHub, OOP, UML, Docker, and React allows me to collaborate efficiently and deliver high-quality results." \
           --og.domain=www.mohamedshebl.com \
           --twitter.username=@mohamedhamdii74 \
           --github.url=https://github.com/Adosh74/Adosh74.github.io \
           --rss.domain=www.mohamedshebl.me \
-          --rss.description="I'm Mohamed Shebl a software engineer specializing in backend development using Node.js and Express. With expertise in these technologies, I have a strong foundation in building robust and scalable backend solutions. With proficiency in C/C++, Java, JavaScript, Typescript, SQL/NoSQL, and RESTful APIs, I can effectively design and implement backend systems. Additionally, my experience with Git/GitHub, OOP, UML, Docker, and React allows me to collaborate efficiently and deliver high-quality results"
-          rm *.md
-          chmod -R 0777 .
+          --rss.description="I'm Mohamed Shebl, a software engineer specializing in backend development using Node.js and Express. With expertise in these technologies, I have a strong foundation in building robust and scalable backend solutions. With proficiency in C/C++, Java, JavaScript, Typescript, SQL/NoSQL, and RESTful APIs, I can effectively design and implement backend systems. Additionally, my experience with Git/GitHub, OOP, UML, Docker, and React allows me to collaborate efficiently and deliver high-quality results."
 
-          - name: Upload GitHub Pages artifact
-          uses: actions/upload-pages-artifact@v3.0.1
-          with:
-            path: .
-  
+      - name: Clean up
+        run: rm -f *.md
+
+      - name: Set file permissions
+        run: chmod -R 0777 .
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v3.0.1
+        with:
+          path: .
+
   deploy:
     environment:
       name: github-pages
