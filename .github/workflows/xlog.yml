@@ -27,21 +27,14 @@ jobs:
 
       - name: Allow non-ASCII character
         run: git config core.quotepath false
-  
+
       - name: restore timestamps
         uses: chetan/git-restore-mtime-action@v1
 
-      - name: Set up Go
-        uses: actions/setup-go@v3
-        with:
-          go-version: 1.22.1
-          check-latest: true
-
       - name: Install xlog
         env:
-           XLOG_VERSION: v1.7.8
+          XLOG_VERSION: v1.7.8
         run: curl --location https://github.com/emad-elsaid/xlog/releases/download/${XLOG_VERSION}/xlog-${XLOG_VERSION}-linux-amd64.tar.gz | tar -xz -C ..
-  
 
       - name: Build
         run: |
@@ -61,11 +54,11 @@ jobs:
           rm *.md
           chmod -R 0777 .
 
-      - name: Upload GitHub Pages artifact
-        uses: actions/upload-pages-artifact@v3.0.1
-        with:
-          path: .
-
+          - name: Upload GitHub Pages artifact
+          uses: actions/upload-pages-artifact@v3.0.1
+          with:
+            path: .
+  
   deploy:
     environment:
       name: github-pages
@@ -75,4 +68,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v1
+        uses: actions/deploy-pages@v4
