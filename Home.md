@@ -9,10 +9,10 @@ This is my blog I write about my projects, some of my skills and the tools I use
 
 # Projects
 
-* MAZ Realty ---> [Live](https://mazrealty.live)
+* MAZ Realty
 * Documentation-System
 * Eary-System
-* The Journey ---> [Live Demo](https://the-journey-q5g0.onrender.com/)
+* The Journey
 * Auth using OTP
 
 # Tools
