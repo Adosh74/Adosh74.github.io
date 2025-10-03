@@ -1,5 +1,5 @@
 ![](/public/ea1589d724c3729739b3c6e4b2bffd741d649e83cb2feca49d5e10a9eeebbc34.jpg)
-I'm **Mohamed Shebl** a software engineer specializing in backend development using Node.js. :technologist:
+I'm **Mohamed Shebl** a software engineer specializing in backend development. :technologist:
 
 This is my blog I write about my projects, some of my skills and the tools I use.
 
