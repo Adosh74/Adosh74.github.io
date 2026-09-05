@@ -16,6 +16,17 @@ concurrency:
   group: "pages"
   cancel-in-progress: true
 
+env:
+  SITE_DOMAIN: blog.mohamedshebl.com
+  SITE_NAME: Mohamed Shebl
+  # Home page <title>. Kept distinct from the portfolio at www.mohamedshebl.com,
+  # which already ranks for the bare name.
+  SITE_TITLE: "Mohamed Shebl — Backend Engineering Blog"
+  SITE_DESCRIPTION: "Mohamed Shebl's engineering blog: backend development with Node.js, Express, TypeScript, MongoDB, Redis, Docker and Linux, plus notes on the projects and tools I work with."
+  SITE_IMAGE: /public/ea1589d724c3729739b3c6e4b2bffd741d649e83cb2feca49d5e10a9eeebbc34.jpg
+  # Federated profile bio (Mastodon and friends), not a search surface.
+  PROFILE_BIO: "I'm Mohamed Shebl, a software engineer specializing in backend development using Node.js and Express. With expertise in these technologies, I have a strong foundation in building robust and scalable backend solutions. With proficiency in C/C++, Java, JavaScript, Typescript, SQL/NoSQL, and RESTful APIs, I can effectively design and implement backend systems. Additionally, my experience with Git/GitHub, OOP, UML, Docker, and React allows me to collaborate efficiently and deliver high-quality results."
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -23,6 +34,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          # Full history: the SEO step reads git log for sitemap <lastmod> and
+          # article:published_time / article:modified_time.
           fetch-depth: 0
 
       - name: Allow non-ASCII character
@@ -36,21 +49,181 @@ jobs:
           XLOG_VERSION: v1.7.8
         run: curl --location https://github.com/emad-elsaid/xlog/releases/download/${XLOG_VERSION}/xlog-${XLOG_VERSION}-linux-amd64.tar.gz | tar -xz -C ..
 
+      # Injected into the <head> of every page via --custom.head. Written outside
+      # the source directory so xlog does not publish it as a page of its own.
+      - name: Write SEO head partial
+        run: |
+          cat > ../seo-head.html <<EOF
+          <meta name="author" content="${SITE_NAME}">
+          <meta name="theme-color" content="#485fc7">
+          <link rel="me" href="https://github.com/Adosh74">
+          <link rel="me" href="https://www.linkedin.com/in/shebl74">
+          <link rel="me" href="https://twitter.com/mohamedhamdii74">
+          <script type="application/ld+json">
+          {
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "Person",
+                "@id": "https://${SITE_DOMAIN}/#person",
+                "name": "${SITE_NAME}",
+                "url": "https://${SITE_DOMAIN}/",
+                "image": "https://${SITE_DOMAIN}${SITE_IMAGE}",
+                "jobTitle": "Software Engineer",
+                "knowsAbout": ["Node.js", "Express", "TypeScript", "JavaScript", "MongoDB", "Redis", "Docker", "Linux", "Backend Development", "REST APIs"],
+                "sameAs": [
+                  "https://github.com/Adosh74",
+                  "https://www.linkedin.com/in/shebl74",
+                  "https://twitter.com/mohamedhamdii74",
+                  "https://www.facebook.com/shebl74",
+                  "https://www.instagram.com/shebl0x01"
+                ]
+              },
+              {
+                "@type": "WebSite",
+                "@id": "https://${SITE_DOMAIN}/#website",
+                "url": "https://${SITE_DOMAIN}/",
+                "name": "${SITE_NAME}",
+                "description": "${SITE_DESCRIPTION}",
+                "inLanguage": "en",
+                "author": { "@id": "https://${SITE_DOMAIN}/#person" },
+                "publisher": { "@id": "https://${SITE_DOMAIN}/#person" }
+              }
+            ]
+          }
+          </script>
+          EOF
+
       - name: Build
         run: |
           ../xlog \
           --build . \
-          --sitename "Mohamed Shebl" \
+          --sitename "${SITE_NAME}" \
           --index=Home \
-          --sitemap.domain=www.mohamedshebl.com \
-          --activitypub.domain=www.mohamedshebl.com \
+          --custom.head=../seo-head.html \
+          --sitemap.domain=${SITE_DOMAIN} \
+          --activitypub.domain=${SITE_DOMAIN} \
           --activitypub.username=Mohamed \
-          --activitypub.summary="I'm Mohamed Shebl, a software engineer specializing in backend development using Node.js and Express. With expertise in these technologies, I have a strong foundation in building robust and scalable backend solutions. With proficiency in C/C++, Java, JavaScript, Typescript, SQL/NoSQL, and RESTful APIs, I can effectively design and implement backend systems. Additionally, my experience with Git/GitHub, OOP, UML, Docker, and React allows me to collaborate efficiently and deliver high-quality results." \
-          --og.domain=www.mohamedshebl.com \
+          --activitypub.icon=${SITE_IMAGE} \
+          --activitypub.image=${SITE_IMAGE} \
+          --activitypub.summary="${PROFILE_BIO}" \
+          --og.domain=${SITE_DOMAIN} \
           --twitter.username=@mohamedhamdii74 \
           --github.url=https://github.com/Adosh74/Adosh74.github.io \
-          --rss.domain=www.mohamedshebl.me \
-          --rss.description="I'm Mohamed Shebl, a software engineer specializing in backend development using Node.js and Express. With expertise in these technologies, I have a strong foundation in building robust and scalable backend solutions. With proficiency in C/C++, Java, JavaScript, Typescript, SQL/NoSQL, and RESTful APIs, I can effectively design and implement backend systems. Additionally, my experience with Git/GitHub, OOP, UML, Docker, and React allows me to collaborate efficiently and deliver high-quality results."
+          --rss.domain=${SITE_DOMAIN} \
+          --rss.description="${SITE_DESCRIPTION}"
+
+      # Must run after Build (needs the generated HTML) and before Clean up
+      # (needs the .md sources to read publish/modify dates out of git).
+      - name: SEO post-processing
+        run: |
+          python3 - <<'PY'
+          import os, re, subprocess
+          from urllib.parse import quote, unquote
+
+          DOMAIN = os.environ["SITE_DOMAIN"]
+          BASE = "https://" + DOMAIN
+          TITLE = os.environ["SITE_TITLE"]
+          DESC = os.environ["SITE_DESCRIPTION"]
+          IMAGE = BASE + os.environ["SITE_IMAGE"]
+          ROOT = os.getcwd()
+          SKIP = {".git", ".github"}
+          ROBOTS = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+
+          def esc(v):
+              return v.replace("&", "&amp;").replace('"', "&quot;").replace("<", "&lt;")
+
+          def git_dates(path):
+              """(published, modified) ISO dates for a source file, empty when unknown."""
+              if not os.path.exists(path):
+                  return "", ""
+              out = subprocess.run(["git", "log", "--format=%cI", "--", path],
+                                   capture_output=True, text=True).stdout.split()
+              return (out[-1], out[0]) if out else ("", "")
+
+          def set_meta(html, attr, name, value, only_if_empty=False):
+              """Rewrite an existing meta tag's content; no-op when the tag is absent."""
+              body = "" if only_if_empty else r'[^"]*'
+              pat = re.compile(r'(<meta\s+%s="%s"\s+content=")%s(")'
+                               % (attr, re.escape(name), body))
+              return pat.sub(lambda m: m.group(1) + esc(value) + m.group(2), html, count=1)
+
+          pages = []
+          for dirpath, dirnames, filenames in os.walk(ROOT):
+              dirnames[:] = [d for d in dirnames if d not in SKIP]
+              if "index.html" in filenames:
+                  pages.append(os.path.relpath(dirpath, ROOT))
+
+          sitemap = []
+          for rel in sorted(pages):
+              # GitHub Pages 301s /page to /page/, so the trailing slash is the
+              # form that answers 200 -- use it for canonical, og:url and sitemap.
+              url_path = "/" if rel == "." else "/" + quote(rel, safe="/+") + "/"
+              # Every URL we emit must decode back to a page that exists.
+              assert os.path.isfile(os.path.join(ROOT, unquote(url_path).strip("/"),
+                                                 "index.html")), url_path
+
+              is_home = rel in (".", "Home")     # /Home/ is a copy of /
+              is_listing = url_path.startswith("/+/")
+              canonical = BASE + ("/" if is_home else url_path)
+              source = "Home.md" if rel == "." else rel + ".md"
+              published, modified = git_dates(source)
+
+              path = os.path.join(ROOT, rel, "index.html")
+              html = open(path, encoding="utf-8").read()
+              html = set_meta(html, "property", "og:url", canonical)
+              html = set_meta(html, "property", "og:image", IMAGE, only_if_empty=True)
+              html = set_meta(html, "name", "twitter:image", IMAGE, only_if_empty=True)
+
+              head = ['<link rel="canonical" href="%s">' % canonical]
+              if is_listing:
+                  # Thin listing pages: crawlable, but kept out of the index.
+                  head.append('<meta name="robots" content="noindex, follow">')
+              else:
+                  head.append('<meta name="robots" content="%s">' % ROBOTS)
+
+              if is_home:
+                  # xlog titles the home page with the bare site name and derives
+                  # its description from page text (which mangles apostrophes).
+                  # Both are the strongest signals on the site -- write them.
+                  html = re.sub(r"<title>.*?</title>", "<title>%s</title>" % esc(TITLE),
+                                html, count=1, flags=re.S)
+                  for attr, name in (("property", "og:title"), ("name", "twitter:title")):
+                      html = set_meta(html, attr, name, TITLE)
+                  for attr, name in (("name", "description"),
+                                     ("property", "og:description"),
+                                     ("name", "twitter:description")):
+                      html = set_meta(html, attr, name, DESC)
+              elif not is_listing:
+                  html = set_meta(html, "property", "og:type", "article")
+                  for name, value in (("article:published_time", published),
+                                      ("article:modified_time", modified)):
+                      if value:
+                          head.append('<meta property="%s" content="%s">' % (name, value))
+                  head.append('<meta property="article:author" content="%s">'
+                              % esc(os.environ["SITE_NAME"]))
+
+              html = html.replace("</head>", "\n".join(head) + "\n</head>", 1)
+              open(path, "w", encoding="utf-8").write(html)
+
+              if not is_listing and rel != "Home":
+                  sitemap.append((canonical, modified))
+
+          # xlog's own sitemap lists the redirecting no-slash URLs, omits the home
+          # page, advertises the /Home duplicate and carries no lastmod. Replace it.
+          with open("sitemap.xml", "w", encoding="utf-8") as f:
+              f.write('<?xml version="1.0" encoding="UTF-8"?>\n'
+                      '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n')
+              for loc, modified in sitemap:
+                  lastmod = "<lastmod>%s</lastmod>" % modified if modified else ""
+                  f.write("<url><loc>%s</loc>%s</url>\n" % (esc(loc), lastmod))
+              f.write("</urlset>\n")
+
+          with open("robots.txt", "w", encoding="utf-8") as f:
+              f.write("User-agent: *\nAllow: /\n\nSitemap: %s/sitemap.xml\n" % BASE)
+
+          print("SEO: %d pages processed, %d urls in sitemap" % (len(pages), len(sitemap)))
+          PY
 
       - name: Clean up
         run: rm -f *.md
