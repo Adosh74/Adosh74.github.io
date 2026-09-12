@@ -118,7 +118,7 @@ jobs:
       - name: SEO post-processing
         run: |
           python3 - <<'PY'
-          import os, re, subprocess
+          import json, os, re, subprocess
           from urllib.parse import quote, unquote
 
           DOMAIN = os.environ["SITE_DOMAIN"]
@@ -141,6 +141,12 @@ jobs:
                                    capture_output=True, text=True).stdout.split()
               return (out[-1], out[0]) if out else ("", "")
 
+          def get_meta(html, attr, name):
+              """Read back a meta tag xlog already wrote; empty when absent."""
+              m = re.search(r'<meta\s+%s="%s"\s+content="([^"]*)"'
+                            % (attr, re.escape(name)), html)
+              return m.group(1) if m else ""
+
           def set_meta(html, attr, name, value, only_if_empty=False):
               """Rewrite an existing meta tag's content; no-op when the tag is absent."""
               body = "" if only_if_empty else r'[^"]*'
@@ -148,11 +154,42 @@ jobs:
                                % (attr, re.escape(name), body))
               return pat.sub(lambda m: m.group(1) + esc(value) + m.group(2), html, count=1)
 
+          def internal_links_to_canonical(html, page_paths):
+              """Point internal links at the URL that answers 200.
+
+              xlog links pages slashless (/Post), and GitHub Pages 301s that to
+              /Post/ -- so every internal hop was costing a redirect. Only paths
+              that name a real page directory are rewritten, which is what keeps
+              /public/style.css, /+/feed.rss and /manifest.json untouched: they
+              are files, not pages, and answer 200 as written.
+              """
+              # xlog writes the '+' of its listing URLs as &#43;, and that
+              # entity's own '#' would read as the start of a fragment. Park it
+              # under a character that cannot appear in markup while we split.
+              PLUS = "\x00"
+
+              def repl(m):
+                  href = m.group(1).replace("&#43;", PLUS)
+                  # Split the path off any #fragment or ?query so /Post#section
+                  # gets the slash in the right place.
+                  cut = min((i for i in (href.find("#"), href.find("?")) if i >= 0),
+                            default=len(href))
+                  path, suffix = href[:cut], href[cut:]
+                  if path.replace(PLUS, "+") in page_paths:
+                      path += "/"
+                  return 'href="%s"' % (path + suffix).replace(PLUS, "&#43;")
+
+              return re.sub(r'href="(/[^"]*)"', repl, html)
+
           pages = []
           for dirpath, dirnames, filenames in os.walk(ROOT):
               dirnames[:] = [d for d in dirnames if d not in SKIP]
               if "index.html" in filenames:
                   pages.append(os.path.relpath(dirpath, ROOT))
+
+          # Every internal path that names a real page, in the encoded form
+          # xlog writes into hrefs. "." is the home page, already slashed.
+          page_paths = {"/" + quote(rel, safe="/+") for rel in pages if rel != "."}
 
           sitemap = []
           for rel in sorted(pages):
@@ -203,7 +240,46 @@ jobs:
                   head.append('<meta property="article:author" content="%s">'
                               % esc(os.environ["SITE_NAME"]))
 
+                  # The site-wide graph above describes the author and the site,
+                  # but nothing said these pages are articles. Reuse xlog's own
+                  # og:title / description so the node cannot drift from the
+                  # <title> a searcher actually sees, and @id the author and
+                  # publisher back to the Person node rather than restating it.
+                  #
+                  # get_meta keys off xlog's attribute order, so if an xlog
+                  # upgrade changes that markup, fail the build here rather than
+                  # quietly emitting a node with no headline or description.
+                  og_title = get_meta(html, "property", "og:title")
+                  assert og_title, "og:title unreadable in %s (xlog markup changed?)" % url_path
+
+                  article = {
+                      "@context": "https://schema.org",
+                      "@type": "BlogPosting",
+                      "@id": canonical + "#article",
+                      "headline": og_title,
+                      "url": canonical,
+                      "mainEntityOfPage": {"@type": "WebPage", "@id": canonical},
+                      "author": {"@id": BASE + "/#person"},
+                      "publisher": {"@id": BASE + "/#person"},
+                      "isPartOf": {"@id": BASE + "/#website"},
+                      "image": IMAGE,
+                      "inLanguage": "en",
+                  }
+                  description = get_meta(html, "name", "description")
+                  if description:
+                      article["description"] = description
+                  if published:
+                      article["datePublished"] = published
+                  if modified:
+                      article["dateModified"] = modified
+                  # description is page prose, so a literal "</script>" in a
+                  # post would otherwise close the block early.
+                  head.append('<script type="application/ld+json">%s</script>'
+                              % json.dumps(article, ensure_ascii=False)
+                                  .replace("<", "\\u003c"))
+
               html = html.replace("</head>", "\n".join(head) + "\n</head>", 1)
+              html = internal_links_to_canonical(html, page_paths)
               open(path, "w", encoding="utf-8").write(html)
 
               if not is_listing and rel != "Home":
