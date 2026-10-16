@@ -19,8 +19,13 @@ concurrency:
 env:
   SITE_DOMAIN: blog.mohamedshebl.com
   SITE_NAME: Mohamed Shebl
-  # Home page <title>. Kept distinct from the portfolio at www.mohamedshebl.com,
-  # which already ranks for the bare name.
+  # The portfolio is the canonical home for the person: the blog's Person node
+  # reuses its @id, so search engines read blog and portfolio as one entity and
+  # the posts count towards the portfolio rather than towards a second "you".
+  PORTFOLIO_URL: https://mohamedshebl.com/
+  PERSON_ID: https://mohamedshebl.com/#person
+  # Home page <title>. Kept distinct from the portfolio's, which is the page
+  # that should rank for the bare name.
   SITE_TITLE: "Mohamed Shebl — Backend Engineering Blog"
   SITE_DESCRIPTION: "Mohamed Shebl's engineering blog: backend development with Node.js, Express, TypeScript, MongoDB, Redis, Docker and Linux, plus notes on the projects and tools I work with."
   SITE_IMAGE: /public/ea1589d724c3729739b3c6e4b2bffd741d649e83cb2feca49d5e10a9eeebbc34.jpg
@@ -56,6 +61,8 @@ jobs:
           cat > ../seo-head.html <<EOF
           <meta name="author" content="${SITE_NAME}">
           <meta name="theme-color" content="#485fc7">
+          <link rel="me" href="${PORTFOLIO_URL}">
+          <link rel="author" href="${PORTFOLIO_URL}">
           <link rel="me" href="https://github.com/Adosh74">
           <link rel="me" href="https://www.linkedin.com/in/shebl74">
           <link rel="me" href="https://twitter.com/mohamedhamdii74">
@@ -65,13 +72,14 @@ jobs:
             "@graph": [
               {
                 "@type": "Person",
-                "@id": "https://${SITE_DOMAIN}/#person",
+                "@id": "${PERSON_ID}",
                 "name": "${SITE_NAME}",
-                "url": "https://${SITE_DOMAIN}/",
+                "url": "${PORTFOLIO_URL}",
                 "image": "https://${SITE_DOMAIN}${SITE_IMAGE}",
                 "jobTitle": "Software Engineer",
                 "knowsAbout": ["Node.js", "Express", "TypeScript", "JavaScript", "MongoDB", "Redis", "Docker", "Linux", "Backend Development", "REST APIs"],
                 "sameAs": [
+                  "https://${SITE_DOMAIN}/",
                   "https://github.com/Adosh74",
                   "https://www.linkedin.com/in/shebl74",
                   "https://twitter.com/mohamedhamdii74",
@@ -86,8 +94,8 @@ jobs:
                 "name": "${SITE_NAME}",
                 "description": "${SITE_DESCRIPTION}",
                 "inLanguage": "en",
-                "author": { "@id": "https://${SITE_DOMAIN}/#person" },
-                "publisher": { "@id": "https://${SITE_DOMAIN}/#person" }
+                "author": { "@id": "${PERSON_ID}" },
+                "publisher": { "@id": "${PERSON_ID}" }
               }
             ]
           }
@@ -259,8 +267,8 @@ jobs:
                       "headline": og_title,
                       "url": canonical,
                       "mainEntityOfPage": {"@type": "WebPage", "@id": canonical},
-                      "author": {"@id": BASE + "/#person"},
-                      "publisher": {"@id": BASE + "/#person"},
+                      "author": {"@id": os.environ["PERSON_ID"]},
+                      "publisher": {"@id": os.environ["PERSON_ID"]},
                       "isPartOf": {"@id": BASE + "/#website"},
                       "image": IMAGE,
                       "inLanguage": "en",
